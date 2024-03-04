@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Информация о книге</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+
+<p th:text="${book.getTitle()}">VALUE</p>
+<p th:text="${book.getAuthor()}">VALUE</p>
+<p th:text="${book.getYear()}">VALUE</p>
+
+<div th:if="${man != null}">
+    <div th:text="'Книга находится у ' + ${man.getFio()}">VALUE</div>
+    <form th:method="PATCH" th:action="@{/books/{id}/free(id=${book.getId()})}">
+        <input type="submit" value="Освободить">
+    </form>
+</div>
+<div th:unless="${man != null}">
+    <div>Эта книга свободна</div>
+    <form th:method="PATCH" th:action="@{/books/{id}/appoint(id=${book.getId()})}">
+        <input type="submit" value="Назначить">
+        <select th:object="${empty_man}" th:field="*{id}">
+            <option th:each="human: ${men}" th:value="${human.getId()}" th:text="${human.getFio()}">
+
+            </option>
+
+        </select>
+
+    </form>
+</div>
+
+
+
+<br>
+<a th:href="@{/books/{id}/edit(id=${book.getId()})}">Изменить</a>
+
+<form th:method="DELETE" th:action="@{/books/{id}(id=${book.getId()})}">
+    <input type="submit" value="Удалить">
+</form>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>
